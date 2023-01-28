@@ -1,0 +1,6 @@
+vgcore.*
+*.o
+*.a
+.vscode
+*~
+*.log
