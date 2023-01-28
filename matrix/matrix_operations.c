@@ -88,6 +88,9 @@ Matrix *Matrix_inverse(Matrix *pMatrix)
     Matrix *pResult = NULL;
     int i = 0;
     int j = 0;
+    int k = 0;
+    double temp = 0;
+
     if (pMatrix->rows != pMatrix->cols) {
         return NULL;
     }
@@ -95,9 +98,21 @@ Matrix *Matrix_inverse(Matrix *pMatrix)
     if (pResult == NULL) {
         return NULL;
     }
+    pResult->setIdentity(pResult);
     for (i = 0; i < pMatrix->rows; i++) {
+        temp = pMatrix->data[i][i];
         for (j = 0; j < pMatrix->cols; j++) {
-            pResult->data[i][j] = pMatrix->data[j][i];
+            pMatrix->data[i][j] /= temp;
+            pResult->data[i][j] /= temp;
+        }
+        for (j = 0; j < pMatrix->rows; j++) {
+            if (i != j) {
+                temp = pMatrix->data[j][i];
+                for (k = 0; k < pMatrix->cols; k++) {
+                    pMatrix->data[j][k] -= pMatrix->data[i][k] * temp;
+                    pResult->data[j][k] -= pResult->data[i][k] * temp;
+                }
+            }
         }
     }
     return pResult;

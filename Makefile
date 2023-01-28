@@ -14,8 +14,16 @@ RED			=	'\033[1;31m'
 
 RESET		=	'\033[0m'
 
-SRC =	matrix/matrix.c	\
-		matrix/matrix_operations.c	\
+SRC = $(MATRIX)
+
+MATRIX =	matrix/matrix_basics.c	\
+			matrix/matrix_core.c	\
+			matrix/matrix_editor.c	\
+			matrix/matrix_init.c	\
+			matrix/matrix_op_methods.c \
+			matrix/matrix_operations.c	\
+			matrix/matrix_printer.c	\
+#			matrix/matrix_main_test.c	\
 
 CFLAGS = -W -Wall -Wextra -I./includes
 
@@ -53,3 +61,5 @@ vclean: fclean
 re: RULE = re
 re:	fclean all
 	@echo -e $(GREEN)'[finished]'$(RESET)': $(NAME): $(RULE)'
+
+.PHONY: all clean fclean vclean re
