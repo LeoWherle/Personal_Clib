@@ -3,23 +3,23 @@
 #include <stdlib.h>
 #include "matrix.h"
 
-static void Matrix_interfaces(Matrix* pMatrix)
-{
-    pMatrix->Delete = delete_Matrix;
-    pMatrix->display = Matrix_display;
-    pMatrix->getRows = Matrix_getRows;
-    pMatrix->getCols = Matrix_getCols;
-    pMatrix->getElement = Matrix_getElement;
-    pMatrix->setElement = Matrix_setElement;
-    pMatrix->setAll = Matrix_setAll;
-    pMatrix->copy = copy_Matrix;
+static Matrix_Methods_t MatrixInterfaceLocation = {
+    .Delete = delete_Matrix,
+    .display = Matrix_display,
+    .getRows = Matrix_getRows,
+    .getCols = Matrix_getCols,
+    .getElement = Matrix_getElement,
+    .setElement = Matrix_setElement,
+    .setAll = Matrix_setAll,
+    .copy = copy_Matrix,
 
-    pMatrix->add = MatrixMethod_add;
-    pMatrix->subtract = MatrixMethod_subtract;
-    pMatrix->multiply = MatrixMethod_multiply;
-    pMatrix->transpose = MatrixMethod_transpose;
-    pMatrix->inverse = MatrixMethod_inverse;
-}
+    .add = MatrixMethod_add,
+    .subtract = MatrixMethod_subtract,
+    .multiply = MatrixMethod_multiply,
+    .transpose = MatrixMethod_transpose,
+    .inverse = MatrixMethod_inverse
+};
+
 
 Matrix* new_Matrix(int rows, int cols)
 {
@@ -32,17 +32,19 @@ Matrix* new_Matrix(int rows, int cols)
     }
     pMatrix->rows = rows;
     pMatrix->cols = cols;
-    pMatrix->data = (double**)malloc(sizeof(double*)*rows);
+    pMatrix->data = NULL;
+    pMatrix->data = malloc(sizeof(double*)*rows);
     if (pMatrix->data == NULL) {
         return NULL;
     }
     for (i = 0; i < rows; i++) {
-        pMatrix->data[i] = (double*)malloc(sizeof(double)*cols);
+        pMatrix->data[i] = NULL;
+        pMatrix->data[i] = malloc(sizeof(double)*cols);
         if (pMatrix->data[i] == NULL) {
             return NULL;
         }
     }
-    Matrix_interfaces(pMatrix);
+    pMatrix->m = &MatrixInterfaceLocation;
     return pMatrix;
 }
 

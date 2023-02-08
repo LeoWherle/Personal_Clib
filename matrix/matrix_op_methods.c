@@ -42,8 +42,8 @@ int MatrixMethod_multiply(Matrix *pMatrix1, Matrix *pMatrix2)
     if (pResult == NULL) {
         return 1;
     }
-    pMatrix1->copy(pMatrix1, pResult);
-    pResult->Delete(pResult);
+    pMatrix1->m->copy(pMatrix1, pResult);
+    pResult->m->Delete(pResult);
     return 0;
 }
 
@@ -55,8 +55,8 @@ int MatrixMethod_transpose(Matrix *pMatrix)
     if (pResult == NULL) {
         return 1;
     }
-    pMatrix->copy(pMatrix, pResult);
-    pResult->Delete(pResult);
+    pMatrix->m->copy(pMatrix, pResult);
+    pResult->m->Delete(pResult);
     return 0;
 }
 
@@ -67,7 +67,7 @@ int MatrixMethod_inverse(Matrix *pMatrix)
     if (pResult == NULL) {
         return 1;
     }
-    pMatrix->copy(pMatrix, pResult);
-    pResult->Delete(pResult);
+    pMatrix->m->copy(pMatrix, pResult);
+    pResult->m->Delete(pResult);
     return 0;
 }

@@ -55,7 +55,7 @@ Matrix *Matrix_multiply(Matrix *pMatrix1, Matrix *pMatrix2)
     if (pResult == NULL) {
         return NULL;
     }
-    pResult->setAll(pResult, 0);
+    pResult->m->setAll(pResult, 0);
     for (i = 0; i < pMatrix1->rows; i++) {
         for (j = 0; j < pMatrix2->cols; j++) {
             for (k = 0; k < pMatrix1->cols; k++) {
@@ -98,7 +98,7 @@ Matrix *Matrix_inverse(Matrix *pMatrix)
     if (pResult == NULL) {
         return NULL;
     }
-    pResult->setIdentity(pResult);
+    pResult->m->setIdentity(pResult);
     for (i = 0; i < pMatrix->rows; i++) {
         temp = pMatrix->data[i][i];
         for (j = 0; j < pMatrix->cols; j++) {

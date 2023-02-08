@@ -1,10 +1,6 @@
 
 typedef struct Matrix_s Matrix;
-/**
- * @brief Matrix structure
- * 
- * @param rows Number of rows
- */
+
 typedef void (*MatrixDelete)(Matrix *m);
 typedef void (*MatrixDisplay)(Matrix *m);
 typedef void (*MatrixDisplayElement)(Matrix *m, int row, int col);
@@ -22,11 +18,7 @@ typedef int (*MatrixMultiply)(Matrix *m, Matrix *n);
 typedef int (*MatrixTranspose)(Matrix *m);
 typedef int (*MatrixInverse)(Matrix *m);
 
-typedef struct Matrix_s {
-    int rows;
-    int cols;
-    double **data;
-
+typedef struct Matrix_Methods_s {
     // Interface
     MatrixDelete Delete;
     MatrixDisplay display;
@@ -44,11 +36,26 @@ typedef struct Matrix_s {
     MatrixMultiply multiply;
     MatrixTranspose transpose;
     MatrixInverse inverse;
+}Matrix_Methods_t;
+
+typedef struct Matrix_s {
+    int rows;
+    int cols;
+    double **data;
+
+    Matrix_Methods_t *m;
 } Matrix;
 
 Matrix *new_Matrix(int rows, int cols);
 Matrix *new_IdentityMatrix(int rows, int cols);
 void delete_Matrix(Matrix *m);
+
+Matrix *Matrix_add(Matrix *m, Matrix *n);
+Matrix *Matrix_subtract(Matrix *m, Matrix *n);
+Matrix *Matrix_multiply(Matrix *m, Matrix *n);
+Matrix *Matrix_transpose(Matrix *m);
+Matrix *Matrix_inverse(Matrix *m);
+
 
 void Matrix_display(Matrix *m);
 void Matrix_display_element(Matrix *m, int row, int col);
@@ -65,9 +72,3 @@ int MatrixMethod_subtract(Matrix *m, Matrix *n);
 int MatrixMethod_multiply(Matrix *m, Matrix *n);
 int MatrixMethod_transpose(Matrix *m);
 int MatrixMethod_inverse(Matrix *m);
-
-Matrix *Matrix_add(Matrix *m, Matrix *n);
-Matrix *Matrix_subtract(Matrix *m, Matrix *n);
-Matrix *Matrix_multiply(Matrix *m, Matrix *n);
-Matrix *Matrix_transpose(Matrix *m);
-Matrix *Matrix_inverse(Matrix *m);

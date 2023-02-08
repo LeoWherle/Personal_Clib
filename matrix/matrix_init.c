@@ -20,7 +20,7 @@ int Matrix_setIdentity(Matrix* pMatrix)
     if (pMatrix->rows != pMatrix->cols) {
         return 1;
     }
-    pMatrix->setAll(pMatrix, 0);
+    pMatrix->m->setAll(pMatrix, 0);
     for (i = 0; i < pMatrix->rows; i++) {
         pMatrix->data[i][i] = 1;
     }
